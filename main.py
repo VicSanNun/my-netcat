@@ -42,6 +42,29 @@ def main():
         print(err)
         instruction()
 
+    for opt,arg in opts:
+        if opt in ("-h", "--help"):
+            instruction()
+        elif opt in ("-l", "--listen"):
+            listen = True
+        elif opt in ("-e", "--execute"):
+            execute = arg
+        elif opt in ("-c", "--commandshell"):
+            command = True
+        elif opt in ("-u", "--upload"):
+            upload_destination = arg
+        elif opt in ("-t", "--target"):
+            target = arg
+        elif opt in ("p", "--port"):
+            port = int(arg)
+        else:
+            assert False, "Unhandled Option"
+
+    if not listen and len(target) and port > 0:
+        client_sender(buffer)
+
+    if listen:
+        server_loop()
 
 main()
 
